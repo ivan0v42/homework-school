@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 
 class ViewController: UIViewController {
@@ -24,6 +25,9 @@ class ViewController: UIViewController {
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
+        login()
+        
+    
     }
 
     // MARK: - User Actions
@@ -34,8 +38,47 @@ class ViewController: UIViewController {
     }
     
     @IBAction func login(){
+
+        guard let url =  URL(string: "https://gdemost.handh.ru/api/v1/bridges/?format=json") else{
+            return
+        }
+        
+        let request = AF.request(url)
+        
+        request.responseDecodable { (result: DataResponse<ObjectResponse, AFError>) in
+            if let value = result.value {
+                do{
+                let archiveData = try? NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: true)
+                } catch {print("error\(error)")}
+                    print(value)
+            } else {
+                //print(result.error?.localizedDescription ?? "")
+            }
+            
+        }
+        
+        //let ud = UserDefaults.standard
+        //ud.set  хранилище не безопасное
+        
+        
+        
+        
+        let queque = DispatchQueue.global(qos: .background)
+        queque.async {
+           sleep(5)
+            print("10")
+            sleep(10)
+            print("20")
+            DispatchQueue.main.async {
+             print("Complete")
+            }
+        }
+        
+//        request.responseJSON{ response in
+//
+//        print(response)
+//    }
     }
-    
     @IBAction func endEditing (sender:UITextField){
         if loginTextField === sender
         {

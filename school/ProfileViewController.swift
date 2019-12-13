@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProfileViewController: UIViewController, UITableViewDataSource {
    
     @IBOutlet var tableView: UITableView!
     @IBOutlet var header: UIImageView!
@@ -116,6 +116,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
 }
+
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        
+    }
+}
+
+
+
 extension UIImage {
 
     func withInset(_ insets: UIEdgeInsets) -> UIImage? {
